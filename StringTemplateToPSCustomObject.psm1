@@ -12,7 +12,7 @@
     $String | Out-File $Path
 }
 
-function Edit-StringTemplateToPSCustomObject {
+function Edit-StringTemplateFile {
     param(
         [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$TemplateName,
         [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$ModuleName,
