@@ -40,7 +40,7 @@ function Invoke-StringTemplateToPSCustomObject {
     if ($TemplateType -eq "FlashExtract") {
         $String | ConvertFrom-String -TemplateFile $Path
     } elseif ($TemplateType -eq "Regex") {
-        $String | ConvertFrom-StringUsingRegexCaptureGroup -TemplateFile $Path
+        ConvertFrom-StringUsingRegexCaptureGroup -TemplateFile $Path -Content ($String | Out-String)
     }
 }
 
