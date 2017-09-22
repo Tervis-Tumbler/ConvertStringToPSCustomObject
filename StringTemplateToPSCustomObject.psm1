@@ -1,4 +1,4 @@
-﻿function New-StringTemplateToPSCustomObject {
+﻿function New-StringTemplateFile {
     param(
         $String,
         $TemplateName,
