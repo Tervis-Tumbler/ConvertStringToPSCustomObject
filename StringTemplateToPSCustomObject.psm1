@@ -1,32 +1,41 @@
 ﻿function New-StringTemplateFile {
     param(
         $String,
-        $TemplateName,
-        $ModuleName,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$TemplateName,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$ModuleName,
+        [Parameter(Mandatory, ParameterSetName = "Path")]$Path,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType        
+    if (-not $Path) {
+        $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
+    }
     $String | Out-File $Path
 }
 
 function Edit-StringTemplateToPSCustomObject {
     param(
-        $TemplateName,
-        $ModuleName,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$TemplateName,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$ModuleName,
+        [Parameter(Mandatory, ParameterSetName = "Path")]$Path,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType    
+    if (-not $Path) {
+        $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
+    }
     Invoke-Item $Path
 }
 
 function Invoke-StringTemplateToPSCustomObject {
     param(
-        $String,
-        $TemplateName,
-        $ModuleName,
+        [Parameter(Mandatory)]$String,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$TemplateName,
+        [Parameter(Mandatory, ParameterSetName = "PathByConvention")]$ModuleName,
+        [Parameter(Mandatory, ParameterSetName = "Path")]$Path,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
+    if (-not $Path) {
+        $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
+    }
 
     if ($TemplateType -eq "FlashExtract") {
         $String | ConvertFrom-String -TemplateFile $Path
