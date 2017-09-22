@@ -1,32 +1,32 @@
-﻿function New-StringToPSCustomObjectTemplate {
+﻿function New-StringTemplateToPSCustomObject {
     param(
         $String,
-        $FunctionName,
+        $TemplateName,
         $ModuleName,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringToPSCustomObjectTemplatePath -FunctionName $FunctionName -ModuleName $ModuleName -TemplateType $TemplateType        
+    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType        
     $String | Out-File $Path
 }
 
-function Edit-StringToPSCustomObjectTemplate {
+function Edit-StringTemplateToPSCustomObject {
     param(
-        $FunctionName,
+        $TemplateName,
         $ModuleName,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringToPSCustomObjectTemplatePath -FunctionName $FunctionName -ModuleName $ModuleName -TemplateType $TemplateType    
+    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType    
     Invoke-Item $Path
 }
 
-function Invoke-StringToPSCustomObjectTemplate {
+function Invoke-StringTemplateToPSCustomObject {
     param(
         $String,
-        $FunctionName,
+        $TemplateName,
         $ModuleName,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
-    $Path = Get-StringToPSCustomObjectTemplatePath -FunctionName $FunctionName -ModuleName $ModuleName -TemplateType $TemplateType
+    $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
 
     if ($TemplateType -eq "FlashExtract") {
         $String | ConvertFrom-String -TemplateFile $Path
@@ -35,15 +35,12 @@ function Invoke-StringToPSCustomObjectTemplate {
     }
 }
 
-function Get-StringToPSCustomObjectTemplatePath {
+function Get-StringTemplatePath {
     param(
-        $FunctionName,
+        $TemplateName,
         $ModuleName,
         [ValidateSet("FlashExtract","Regex")]$TemplateType = "FlashExtract"
     )
     $ModulePath = (Get-Module -ListAvailable $ModuleName).ModuleBase
-    "$ModulePath\Templates\$FunctionName.$($TemplateType).Template"
+    "$ModulePath\Templates\$TemplateName.$($TemplateType).Template"
 }
-
-}
-
