@@ -9,7 +9,7 @@
     if (-not $Path) {
         $Path = Get-StringTemplatePath -TemplateName $TemplateName -ModuleName $ModuleName -TemplateType $TemplateType
     }
-    $String | Out-File $Path
+    $String | Out-File $Path -Encoding ascii
 }
 
 function Edit-StringTemplateFile {
